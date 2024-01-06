@@ -96,7 +96,7 @@ class _ChatPageState extends State<ChatPage> {
                     BoxShadow(
                       color: Color.fromARGB(255, 58, 58, 58).withOpacity(0.5),
                       spreadRadius: 6,
-                      blurRadius: 7,
+                      blurRadius: 6,
                       offset: Offset(0, 3), // changes position of shadow
                     ),
                   ],
@@ -109,7 +109,8 @@ class _ChatPageState extends State<ChatPage> {
                   Expanded(
                       child: TextFormField(
                     controller: messageController,
-                    style: const TextStyle(color: Colors.white),
+                    style:
+                        const TextStyle(color: Color.fromARGB(255, 12, 12, 12)),
                     decoration: const InputDecoration(
                       hintText: "Send a message...",
                       hintStyle: TextStyle(

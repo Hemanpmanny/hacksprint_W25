@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,10 @@ class _ProfilePageState extends State<ProfilePage> {
   final picker = ImagePicker();
 
   Future<void> _getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      preferredCameraDevice: CameraDevice.front,
+    );
 
     if (pickedFile != null) {
       setState(() {
@@ -47,7 +51,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
         // TODO: Update the user's profile in Firebase with the imageUrl
         // For example, you can use Firestore to store user data including the profile picture URL.
-        // Firestore.instance.collection('users').doc(userId).update({'profilePicture': imageUrl});
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({'profilePicture': imageUrl});
 
         // Display a success message or update UI accordingly.
         print('Profile picture uploaded successfully!');
@@ -80,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
           InkWell(
             onTap: _getImageFromGallery,
             child: CircleAvatar(
-              radius: 75,
+              radius: 120,
               backgroundImage: _image != null ? FileImage(_image!) : null,
             ),
           ),
@@ -173,10 +180,13 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.account_circle,
-              size: 200,
-              color: Colors.grey[700],
+            GestureDetector(
+              onDoubleTap: () {},
+              child: Icon(
+                Icons.account_circle,
+                size: 200,
+                color: Colors.grey[700],
+              ),
             ),
             const SizedBox(
               height: 15,
