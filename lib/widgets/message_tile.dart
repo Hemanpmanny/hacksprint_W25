@@ -44,9 +44,16 @@ class _MessageTileState extends State<MessageTile> {
         margin: widget.sentByMe
             ? const EdgeInsets.only(left: 30)
             : const EdgeInsets.only(right: 30),
-        padding:
-            const EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 10, bottom: 5, left: 5, right: 5),
         decoration: BoxDecoration(
+            // border: Border.all(color: Colors.black),
+            boxShadow: const [
+              BoxShadow(
+                color: Color.fromARGB(54, 0, 0, 0),
+                blurRadius: 8.0,
+                offset: Offset(0, 2),
+              )
+            ],
             borderRadius: widget.sentByMe
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -59,8 +66,8 @@ class _MessageTileState extends State<MessageTile> {
                     bottomRight: Radius.circular(20),
                   ),
             color: widget.sentByMe
-                ? Theme.of(context).primaryColor
-                : Colors.grey[700]),
+                ? Color.fromARGB(199, 127, 204, 236)
+                : Color.fromARGB(255, 251, 248, 248)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -70,18 +77,19 @@ class _MessageTileState extends State<MessageTile> {
               style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 5, 5, 5),
                   letterSpacing: -0.5),
             ),
             const SizedBox(
-              height: 8,
+              height: 6,
             ),
             filePreviewerWidget(
               fileURL: widget.fileURL,
             ),
             Text(widget.message,
                 textAlign: TextAlign.start,
-                style: const TextStyle(fontSize: 16, color: Colors.white)),
+                style: const TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 15, 15, 15))),
           ],
         ),
       ),

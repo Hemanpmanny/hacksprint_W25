@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:groupchat/pages/auth/login_page.dart';
 import 'package:groupchat/pages/home_page.dart';
 import 'package:groupchat/services/auth_service.dart';
 import 'package:groupchat/widgets/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
@@ -17,6 +22,45 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  File? _image; // Make _image nullable
+  final picker = ImagePicker();
+
+  Future<void> _getImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _uploadProfilePicture() async {
+    try {
+      if (_image != null) {
+        String userId = _auth.currentUser!.uid;
+        Reference ref = _storage.ref().child('profile_pictures/$userId.jpg');
+        await ref.putFile(_image!);
+        String imageUrl = await ref.getDownloadURL();
+
+        // TODO: Update the user's profile in Firebase with the imageUrl
+        // For example, you can use Firestore to store user data including the profile picture URL.
+        // Firestore.instance.collection('users').doc(userId).update({'profilePicture': imageUrl});
+
+        // Display a success message or update UI accordingly.
+        print('Profile picture uploaded successfully!');
+      } else {
+        // Handle case where no image is selected.
+        print('No image selected');
+      }
+    } catch (e) {
+      // Handle errors during the upload process.
+      print('Error uploading profile picture: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +77,12 @@ class _ProfilePageState extends State<ProfilePage> {
           child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 50),
         children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            size: 150,
-            color: Colors.grey[700],
+          InkWell(
+            onTap: _getImageFromGallery,
+            child: CircleAvatar(
+              radius: 75,
+              backgroundImage: _image != null ? FileImage(_image!) : null,
+            ),
           ),
           const SizedBox(
             height: 15,

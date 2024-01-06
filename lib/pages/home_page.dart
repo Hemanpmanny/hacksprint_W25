@@ -188,7 +188,20 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       )),
-      body: groupList(),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                opacity: 0.6,
+                image: AssetImage("assets/wall.jpg"), // replace with your image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          groupList(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           popUpDialog(context);

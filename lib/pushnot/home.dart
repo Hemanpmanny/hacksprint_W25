@@ -44,26 +44,26 @@ class _HomepageState extends State<Homepage> {
                 },
                 label: Text("Simple Notification"),
               ),
-              ElevatedButton.icon(
-                icon: Icon(Icons.timer_outlined),
-                onPressed: () {
-                  LocalNotifications.showPeriodicNotifications(
-                      title: "Periodic Notification",
-                      body: "This is a Periodic Notification",
-                      payload: "This is periodic data");
-                },
-                label: Text("Periodic Notifications"),
-              ),
-              ElevatedButton.icon(
-                icon: Icon(Icons.timer_outlined),
-                onPressed: () {
-                  LocalNotifications.showScheduleNotification(
-                      title: "Schedule Notification",
-                      body: "This is a Schedule Notification",
-                      payload: "This is schedule data");
-                },
-                label: Text("Schedule Notifications"),
-              ),
+              // ElevatedButton.icon(
+              //   icon: Icon(Icons.timer_outlined),
+              //   onPressed: () {
+              //     LocalNotifications.showPeriodicNotifications(
+              //         title: "Periodic Notification",
+              //         body: "This is a Periodic Notification",
+              //         payload: "This is periodic data");
+              //   },
+              //   label: Text("Periodic Notifications"),
+              // ),
+              // ElevatedButton.icon(
+              //   icon: Icon(Icons.timer_outlined),
+              //   onPressed: () {
+              //     LocalNotifications.showScheduleNotification(
+              //         title: "Schedule Notification",
+              //         body: "This is a Schedule Notification",
+              //         payload: "This is schedule data");
+              //   },
+              // label: Text("Schedule Notifications"),
+              // ),
               // to close periodic notifications
               ElevatedButton.icon(
                   icon: Icon(Icons.delete_outline),

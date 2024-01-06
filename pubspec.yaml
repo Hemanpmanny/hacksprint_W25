@@ -40,6 +40,7 @@ dependencies:
   syncfusion_flutter_calendar: ^24.1.44
   dio: ^5.4.0
   timezone: ^0.9.0
+  image_picker: ^1.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -55,6 +56,8 @@ dependencies:
   flutter_local_notifications: ^16.3.0
   flutter_timezone: ^1.0.8
   rxdart: ^0.27.7
+  downloads_path_provider_28: ^0.1.2
+  permission_handler: ^11.1.0
 
 dev_dependencies:
   flutter_test:

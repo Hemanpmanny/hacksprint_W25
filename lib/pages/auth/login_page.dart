@@ -49,7 +49,15 @@ class _LoginPageState extends State<LoginPage> {
                         const Text("Login now to see what they are talking!",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w400)),
-                        Image.asset("assets/login.png"),
+                        SizedBox(height: 5),
+                        Image.asset(
+                          "assets/group.jpg",
+                          width: 350,
+                          height: 320,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
                               labelText: "Email",
@@ -72,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                                 : "Please enter a valid email";
                           },
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         TextFormField(
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(

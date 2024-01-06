@@ -72,84 +72,111 @@ class _ChatPageState extends State<ChatPage> {
               icon: const Icon(Icons.info))
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          // chat messages here
-          chatMessages(),
-          Container(
-            alignment: Alignment.bottomCenter,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              width: 500,
-              height: 70,
-              color: Colors.grey[700],
-              child: Row(children: [
-                Expanded(
-                    child: TextFormField(
-                  controller: messageController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                    hintText: "Send a message...",
-                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                    border: InputBorder.none,
-                  ),
-                )),
-                const SizedBox(
-                  width: 12,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.upload_file),
-                  color: Colors.white,
-                  onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles();
-
-                    if (result != null) {
-                      PlatformFile file = result.files.first;
-
-                      try {
-                        // Upload file to Firebase Storage
-                        TaskSnapshot snapshot = await FirebaseStorage.instance
-                            .ref('uploads/${file.name}')
-                            .putFile(File(file.path!));
-
-                        // Once the file upload is complete, get the download URL
-                        downloadURL = await snapshot.ref.getDownloadURL();
-
-                        // Send the download URL as a message
-                        sendMessage(fileURL: downloadURL);
-                      } catch (e) {
-                        // TODO: do something about this.
-                        print(e);
-                      }
-                    } else {
-                      // User canceled the picker
-                    }
-                  },
-                ),
-                GestureDetector(
-                  onTap: () {
-                    sendMessage();
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(30),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              alignment: Alignment.center,
+              opacity: 0.3,
+              image: AssetImage("assets/doodle.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: Stack(
+          children: <Widget>[
+            // chat messages here
+            chatMessages(),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 7),
+              alignment: Alignment.bottomCenter,
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 242, 235, 235),
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 58, 58, 58).withOpacity(0.5),
+                      spreadRadius: 6,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
                     ),
-                    child: const Center(
-                        child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    )),
-                  ),
+                  ],
                 ),
-              ]),
-            ),
-          )
-        ],
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                width: 500,
+                height: 70,
+                child: Row(children: [
+                  Expanded(
+                      child: TextFormField(
+                    controller: messageController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      hintText: "Send a message...",
+                      hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 8, 8, 8), fontSize: 16),
+                      border: InputBorder.none,
+                    ),
+                  )),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    icon: const Icon(
+                      Icons.upload_file,
+                      size: 40,
+                    ),
+                    color: Color.fromARGB(255, 63, 180, 230),
+                    onPressed: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+
+                      if (result != null) {
+                        PlatformFile file = result.files.first;
+
+                        try {
+                          // Upload file to Firebase Storage
+                          TaskSnapshot snapshot = await FirebaseStorage.instance
+                              .ref('uploads/${file.name}')
+                              .putFile(File(file.path!));
+
+                          // Once the file upload is complete, get the download URL
+                          downloadURL = await snapshot.ref.getDownloadURL();
+
+                          // Send the download URL as a message
+                          sendMessage(fileURL: downloadURL);
+                        } catch (e) {
+                          // TODO: do something about this.
+                          print(e);
+                        }
+                      } else {
+                        // User canceled the picker
+                      }
+                    },
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      sendMessage();
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Center(
+                          child: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      )),
+                    ),
+                  ),
+                ]),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

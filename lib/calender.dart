@@ -116,13 +116,13 @@ class _MyCalendarAppState extends State<MyCalendarApp>
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  _addEventToDataSource();
                   LocalNotifications.showSimpleNotification(
-                      title: "Shedule Notification",
-                      body: _eventController.text,
+                      title: _eventController.text,
+                      body: 'sHEDULE NOTIFICATION',
                       payload:
                           "$_selectedDateTime to ${_selectedDateTime.add(const Duration(hours: 2))}");
                   Navigator.of(context).pop();
+                  _addEventToDataSource();
                 },
                 child: Text('Add Event'),
               ),
